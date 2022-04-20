@@ -1,2 +1,7 @@
 /.vscode
 /env
+litreview/litreview/__pycache__
+litreview/review/__pycache__
+litreview/review/migrations/__pycache__/
+litreview/authentication/__pycache__
+litreview/authentication/migrations/__pycache__
