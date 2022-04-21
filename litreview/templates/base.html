@@ -7,10 +7,15 @@
     </head>
     <body>
         <header>
-            <h1>LITReview</h1>
-            {%  if user.is_authenticated %}
-            <p>Vous êtes connecté en tant que {{ request.user }}. <a href="{% url 'logout' %}">Se déconnecter</a></p>
-            {% endif %}
+            <p>
+                {%  if user.is_authenticated %}
+                Bonjour {{ request.user }}!
+                {% endif %}
+            </p>
+            <h1>
+                LITReview
+            </h1>
+            {% include 'partials/nav.html' %}
         </header>
         <main>
         {% block content %}
