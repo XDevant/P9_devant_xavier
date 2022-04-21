@@ -2,4 +2,8 @@
 
 {% block content %}
     <h2>Votre flux:</h2>
+    <div>
+        <p><a href="{% url 'create-ticket' %}">Demander une critique</a></p>
+        <p><a href="{% url 'create-review' %}">Créer une critique</a></p>
+    </div>
 {% endblock content %}
