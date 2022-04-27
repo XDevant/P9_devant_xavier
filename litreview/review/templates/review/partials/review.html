@@ -1,0 +1,13 @@
+<div class="review">
+    <div class="header">
+        <p>{{ review.user }}</p>
+        <p>{{ review.time_created }}</p>
+    </div>
+    <div class="review-body">
+        <p>{{ review.headline }}</p>
+        <p>{{ review.rating }}</p>
+    </div>
+    <div class="review-ticket">
+        {% include 'review/partials/ticket.html' with ticket=review.ticket %}
+    </div>
+</div>

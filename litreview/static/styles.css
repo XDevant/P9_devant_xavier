@@ -37,3 +37,43 @@ main {
 label {
     display: block;
 }
+
+.flux {
+    min-width: 80%;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    min-width: 80%;
+    padding: 0 1rem;
+}
+
+.footer {
+    display: flex;
+    justify-content: right;
+    min-width: 80%;
+}
+
+.footer p {
+    padding-right: 2rem;
+}
+
+.review-body {
+    display: flex;
+    justify-content: left;
+}
+
+.post,
+.review-ticket {
+    min-width: 80%;
+    border: 1px solid white;
+}
+
+div {
+    padding-left: 1rem;
+}
+
+img {
+    padding-bottom: 1rem;
+}

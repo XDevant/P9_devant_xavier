@@ -1,7 +1,9 @@
-<div>
-    <p>{{ ticket.user }}</p>
-    <p>{{ ticket.time_created }}</p>
+<div class="ticket">
+    <div class="header">
+        <p>{{ ticket.user }}</p>
+        <p>{{ ticket.time_created }}</p>
+    </div>
+    <p>{{ ticket.title }}</p>
+    <p>{{ ticket.description }}</p>
+    <img src="{{ ticket.image.url }}">
 </div>
-<p>{{ ticket.title }}</p>
-<p>{{ ticket.description }}</p>
-<img src="{{ ticket.image.url }}">

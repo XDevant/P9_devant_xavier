@@ -7,15 +7,14 @@
     </head>
     <body>
         <header>
-            <p>
-                {%  if user.is_authenticated %}
-                Bonjour {{ request.user }}!
-                {% endif %}
+            {%  if user.is_authenticated %}
+            <p>Bonjour {{ request.user }}!
             </p>
-            <h1>
-                LITReview
-            </h1>
+            <h1>LITReview</h1>
             {% include 'partials/nav.html' %}
+            {% else %}
+            <h1>LITReview</h1>
+            {% endif %}
         </header>
         <main>
         {% block content %}

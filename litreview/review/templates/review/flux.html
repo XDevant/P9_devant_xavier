@@ -2,8 +2,19 @@
 
 {% block content %}
     <h2>Votre flux:</h2>
-    <div>
+    <div class="header">
         <p><a href="{% url 'create-ticket' %}">Demander une critique</a></p>
         <p><a href="{% url 'create-review' %}">Créer une critique</a></p>
+    </div>
+    <div class="flux">
+        {% for post in posts %}
+        <div class="post">
+            {% if post.content_type == 'TICKET' %}
+                {% include 'review/partials/ticket.html' with ticket=post %}
+            {% elif post.content_type == 'REVIEW' %}
+                {% include 'review/partials/review.html' with review=post %}
+            {% endif %}
+        </div>
+        {% endfor %}
     </div>
 {% endblock content %}
