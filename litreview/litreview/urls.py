@@ -14,7 +14,7 @@ urlpatterns = [
     path('flux/', review.views.flux, name='flux'),
     path('posts/', review.views.posts, name='posts'),
     path('ticket/add/',review.views.create_ticket, name='create-ticket'),
-    path('ticket/add-review/',review.views.ticket_review, name='ticket-review'),
+    path('ticket/<int:id>/add-review/', review.views.ticket_review, name='ticket-review'),
     path('review/add/',review. views.create_review, name='create-review'),
     path('followed/', review.views.followed, name='followed'),
 ]

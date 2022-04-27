@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
+from review.models import Ticket
 
 @login_required
 def flux(request):
@@ -44,7 +45,8 @@ def create_review(request):
     return render(request, 'review/create_review.html', context=context)
 
 @login_required
-def ticket_review(request):
+def ticket_review(request, id):
+    ticket = Ticket.objects.get(id=id)
     form = forms.ReviewForm()
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
@@ -53,7 +55,7 @@ def ticket_review(request):
             review.user = request.user
             review.save()
             return redirect('flux')
-    return render(request, 'review/ticket_review.html', context={'form': form})
+    return render(request, 'review/ticket_review.html', context={'ticket': ticket, 'form': form})
 
 @login_required
 def followed(request):
