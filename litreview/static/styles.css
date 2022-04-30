@@ -64,6 +64,10 @@ label {
     justify-content: left;
 }
 
+.review-separator {
+    padding: 0 1rem;
+}
+
 .post,
 .review-ticket {
     min-width: 80%;

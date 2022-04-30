@@ -1,11 +1,18 @@
 <div class="review">
     <div class="header">
-        <p>{{ review.user }}</p>
+        <p>{{ review.user }} a publié une critique</p>
         <p>{{ review.time_created }}</p>
     </div>
     <div class="review-body">
         <p>{{ review.headline }}</p>
-        <p>{{ review.rating }}</p>
+        <p class="review-separator">-</p>
+        {% for i in "12345" %}
+            {% if forloop.counter > review.rating %}
+                <p>☆</p>
+            {% else %}
+                <p>★</p>
+            {% endif %}
+        {% endfor %}
     </div>
     <div class="review-ticket">
         {% include 'review/partials/ticket.html' with ticket=review.ticket %}

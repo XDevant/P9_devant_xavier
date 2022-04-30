@@ -1,6 +1,10 @@
 <div class="ticket">
     <div class="header">
-        <p>{{ ticket.user }}</p>
+        {% if user != ticket.user %}
+        <p>{{ ticket.user }} a demandé une critique</p>
+        {% else %}
+        <p>Vous avez demandé une critique</p>
+        {% endif %}
         <p>{{ ticket.time_created }}</p>
     </div>
     <p>{{ ticket.title }}</p>

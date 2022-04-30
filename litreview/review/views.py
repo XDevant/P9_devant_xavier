@@ -20,7 +20,7 @@ def flux(request):
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 
                    reverse=True)
-    return render(request, 'review/flux.html', context={'posts': posts, 'user': flux_owner})
+    return render(request, 'review/flux.html', context={'posts': posts})
 
 @login_required
 def posts(request):
@@ -35,7 +35,7 @@ def posts(request):
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 
                    reverse=True)
-    return render(request, 'review/posts.html', context={'posts': posts, 'user': flux_owner})
+    return render(request, 'review/posts.html', context={'posts': posts})
 
 @login_required
 def create_ticket(request):
