@@ -111,8 +111,21 @@ def delete_ticket(request, id):
 
 @login_required
 def edit_review(request, id):
-    return redirect('posts')
+    review = Review.objects.get(id=id)
+    if request.method == 'POST':
+        form = forms.ReviewForm(request.POST, instance=review)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    else:
+        form = forms.ReviewForm(instance=review)
+    return render(request, 'review/edit_review.html', {'form': form})
 
 @login_required
 def delete_review(request, id):
-    return redirect('posts')
+    review = Review.objects.get(id=id)
+    if request.method == 'POST':
+        review.delete()
+        return redirect('posts')
+    return render(request, 'review/delete_review.html', {'review': review})
+    
