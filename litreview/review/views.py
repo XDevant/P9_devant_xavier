@@ -90,16 +90,29 @@ def followed(request):
 
 @login_required
 def edit_ticket(request, id):
-    return redirect('flux')
+    ticket = Ticket.objects.get(id=id)
+    if request.method == 'POST':
+        form = forms.TicketForm(request.POST, instance=ticket)
+        if form.is_valid():
+            form.save()
+            return redirect('posts')
+    else:
+        form = forms.TicketForm(instance=ticket)
+    return render(request, 'review/edit_ticket.html', {'form': form})
 
 @login_required
 def delete_ticket(request, id):
-    return redirect('flux')
+    ticket = Ticket.objects.get(id=id)
+    if request.method == 'POST':
+        ticket.delete()
+        return redirect('posts')
+    return render(request, 'review/edit_ticket.html', {'ticket': ticket})
+
 
 @login_required
 def edit_review(request, id):
-    return redirect('flux')
+    return redirect('posts')
 
 @login_required
 def delete_review(request, id):
-    return redirect('flux')
+    return redirect('posts')
