@@ -13,4 +13,5 @@ class ReviewForm(forms.ModelForm):
         fields = ['headline', 'rating', 'body']
 
 class FollowForm(forms.Form):
+    follow = forms.BooleanField(widget=forms.HiddenInput, initial=True)
     name = forms.CharField(max_length=8192)

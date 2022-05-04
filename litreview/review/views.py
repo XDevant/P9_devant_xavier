@@ -47,14 +47,20 @@ def followed(request):
     followeds = [followed.followed_user for followed in followeds]
     form = forms.FollowForm()
     if request.method == 'POST':
-        form = forms.FollowForm(request.POST)
-        if form.is_valid():
-            follow = UserFollows()
-            follow.user = request.user
-            follow.followed_user = User.objects.get(username=request.POST['name'])
-            if follow.followed_user is not None:
-                follow.save()
-            return redirect('followed')
+        follow = UserFollows()
+        follow.user = request.user
+        if 'follow' in request.POST:
+            form = forms.FollowForm(request.POST)
+            if form.is_valid():
+                follow.followed_user = User.objects.get(username=request.POST['name'])
+                if follow.followed_user is not None:
+                    follow.save()
+        else:
+            user=current_user.id
+            followed_user=User.objects.get(username=request.POST['followed']).id
+            follow = UserFollows.objects.filter(user=user, followed_user=followed_user)
+            follow.delete()
+        return redirect('followed')
     context = {'form': form,'followers': followers, 'followeds': followeds}
     return render(request, 'review/followed.html', context=context)
 
