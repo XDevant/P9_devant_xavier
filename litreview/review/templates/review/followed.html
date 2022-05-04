@@ -3,11 +3,24 @@
 {% block content %}
     <section>
         <h2>Suivre d'autres utilisateurs</h2>
+        <form method="post">
+            {{ form }}
+            {% csrf_token %}
+            <button type="submit" >Envoyer</button>
+        </form>
     </section>
     <section>
         <h2>Abonnements</h2>
+        {% for followed in followeds %}
+        <p class="followed">{{ followed.username }}</p>
+        {% endfor %}
     </section>
     <section>
         <h2>Abonnés</h2>
+        {% for follower in followers %}
+        <p class="follower">
+            {{ follower.username }}
+        </p>
+        {% endfor %}
     </section>
 {% endblock content %}

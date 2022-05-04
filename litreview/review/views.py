@@ -4,12 +4,13 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
 from review.models import Ticket,Review, UserFollows
+from authentication.models import User
 
 @login_required
 def flux(request):
     flux_owner = request.user
     owner_followed_list = UserFollows.objects.filter(user = flux_owner)
-    followed = [owner_followed.followed_users for owner_followed in owner_followed_list]
+    followed = [owner_followed.followed_user for owner_followed in owner_followed_list]
 
     reviews = Review.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
@@ -24,18 +25,38 @@ def flux(request):
 
 @login_required
 def posts(request):
-    flux_owner = request.user
+    current_user = request.user
 
-    reviews = Review.objects.filter(user=flux_owner)
+    reviews = Review.objects.filter(user=current_user)
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
 
-    tickets = Ticket.objects.filter(user=flux_owner)
+    tickets = Ticket.objects.filter(user=current_user)
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
 
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 
                    reverse=True)
     return render(request, 'review/posts.html', context={'posts': posts})
+
+@login_required
+def followed(request):
+    current_user = request.user
+    followers = UserFollows.objects.filter(followed_user=current_user)
+    followers = [follower.user for follower in followers]
+    followeds = UserFollows.objects.filter(user=current_user)
+    followeds = [followed.followed_user for followed in followeds]
+    form = forms.FollowForm()
+    if request.method == 'POST':
+        form = forms.FollowForm(request.POST)
+        if form.is_valid():
+            follow = UserFollows()
+            follow.user = request.user
+            follow.followed_user = User.objects.get(username=request.POST['name'])
+            if follow.followed_user is not None:
+                follow.save()
+            return redirect('followed')
+    context = {'form': form,'followers': followers, 'followeds': followeds}
+    return render(request, 'review/followed.html', context=context)
 
 @login_required
 def create_ticket(request):
@@ -83,10 +104,6 @@ def ticket_review(request, id):
             review.save()
             return redirect('flux')
     return render(request, 'review/ticket_review.html', context={'ticket': ticket, 'form': form})
-
-@login_required
-def followed(request):
-    return render(request, 'review/followed.html')
 
 @login_required
 def edit_ticket(request, id):
