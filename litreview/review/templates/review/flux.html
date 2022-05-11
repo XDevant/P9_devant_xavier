@@ -11,6 +11,9 @@
         <div class="post">
             {% if post.content_type == 'TICKET' %}
                 {% include 'review/partials/ticket.html' with ticket=post %}
+                {% if post.answered %}
+                    <p><a href="{% url 'ticket-review' post.id %}">Créer une critique</a></p>
+                {% endif %}
             {% elif post.content_type == 'REVIEW' %}
                 {% include 'review/partials/review.html' with review=post %}
             {% endif %}

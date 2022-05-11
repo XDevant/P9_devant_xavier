@@ -1,11 +1,10 @@
 <div class="ticket">
     <div class="header">
         {% if user != ticket.user %}
-        <p>{{ ticket.user }} a demandé une critique</p>
+        <p>Ticket {{ ticket.user }}</p>
         {% else %}
-        <p>Vous avez demandé une critique</p>
+        <p>Votre Ticket</p>
         {% endif %}
-        <p>{{ ticket.time_created }}</p>
     </div>
     {% include 'review/partials/headerless_ticket.html' with ticket=ticket %}
 </div>

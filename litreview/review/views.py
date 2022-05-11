@@ -1,5 +1,5 @@
 from itertools import chain
-from django.db.models import CharField, Value, Q
+from django.db.models import BooleanField, CharField, Value, Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
@@ -14,10 +14,12 @@ def flux(request):
 
     reviews = Review.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
-
     tickets = Ticket.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
+    tickets = tickets.annotate(content_type=Value('TICKET', CharField()), answered=Value(False,BooleanField()))
+    for ticket in tickets:
+        answered = Review.objects.filter(ticket=ticket, user=flux_owner)
+        if answered is not None:
+            ticket.answered = True
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 
                    reverse=True)
@@ -26,13 +28,10 @@ def flux(request):
 @login_required
 def posts(request):
     current_user = request.user
-
     reviews = Review.objects.filter(user=current_user)
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
-
     tickets = Ticket.objects.filter(user=current_user)
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 
                    reverse=True)
@@ -107,6 +106,7 @@ def ticket_review(request, id):
         if form.is_valid():
             review = form.save(commit=False)
             review.user = request.user
+            review.ticket = ticket
             review.save()
             return redirect('flux')
     return render(request, 'review/ticket_review.html', context={'ticket': ticket, 'form': form})
@@ -115,9 +115,11 @@ def ticket_review(request, id):
 def edit_ticket(request, id):
     ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
-        form = forms.TicketForm(request.POST, instance=ticket)
+        form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
-            form.save()
+            ticket = form.save(commit=False)
+            ticket.user = request.user
+            ticket.save()
             return redirect('posts')
     else:
         form = forms.TicketForm(instance=ticket)
@@ -129,7 +131,7 @@ def delete_ticket(request, id):
     if request.method == 'POST':
         ticket.delete()
         return redirect('posts')
-    return render(request, 'review/edit_ticket.html', {'ticket': ticket})
+    return render(request, 'review/delete_ticket.html', {'ticket': ticket})
 
 
 @login_required

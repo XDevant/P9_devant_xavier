@@ -24,9 +24,9 @@
     <section class="follow">
         <h2>Abonnés</h2>
         {% for follower in followers %}
-        <p class="follower">
-            {{ follower.username }}
-        </p>
+        <div class="follower">
+            <p>{{ follower.username }}</p>
+        </div>
         {% endfor %}
     </section>
 {% endblock content %}

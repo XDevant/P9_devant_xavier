@@ -1,0 +1,11 @@
+<article class="body">
+    <div>
+        <h3>{{ ticket.title }}</h3>
+        <p>{{ ticket.description }}</p>
+    </div>
+    {% if ticket.image %}
+        <img src="{{ ticket.image.url }}" alt="Photo de couverture">
+    {% else %}
+        <p>Pas d'image fournie</p>
+    {% endif %}
+</article>
