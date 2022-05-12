@@ -7,17 +7,21 @@
         <p><a href="{% url 'create-review' %}">Créer une critique</a></p>
     </div>
     <div class="flux">
-        {% for post in posts %}
-        <div class="post">
-            {% if post.content_type == 'TICKET' %}
-                {% include 'review/partials/ticket.html' with ticket=post %}
-                {% if post.answered %}
-                    <p><a href="{% url 'ticket-review' post.id %}">Créer une critique</a></p>
+        {% if posts %}
+            {% for post in posts %}
+            <div class="post">
+                {% if post.content_type == 'TICKET' %}
+                    {% include 'review/partials/ticket.html' with ticket=post %}
+                    {% if post.answered %}
+                        <p><a href="{% url 'ticket-review' post.id %}">Créer une critique</a></p>
+                    {% endif %}
+                {% elif post.content_type == 'REVIEW' %}
+                    {% include 'review/partials/review.html' with review=post %}
                 {% endif %}
-            {% elif post.content_type == 'REVIEW' %}
-                {% include 'review/partials/review.html' with review=post %}
-            {% endif %}
-        </div>
-        {% endfor %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Contient vos post et ceux des utilisateurs auxquels vous êtes abonné</p>
+        {% endif %}
     </div>
 {% endblock content %}

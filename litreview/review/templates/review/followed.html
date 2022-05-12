@@ -6,8 +6,11 @@
         <form method="post" class="follow">
             {{ form }}
             {% csrf_token %}
-            <button type="submit">Envoyer</button>
+            <button type="submit" id="follow">Envoyer</button>
         </form>
+        <p>
+            {% if message %} {{ message }} {% endif %}
+        </p>
     </section>
     <section class="follower">
         <h2>Abonnements</h2>

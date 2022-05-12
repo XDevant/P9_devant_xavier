@@ -8,8 +8,7 @@
     <body>
         <header>
             {%  if user.is_authenticated %}
-            <p>Bonjour {{ request.user }}!
-            </p>
+            <p>Bonjour {{ request.user }}!</p>
             <h1>LITReview</h1>
             {% include 'partials/nav.html' %}
             {% else %}

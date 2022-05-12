@@ -1,4 +1,6 @@
 from itertools import chain
+from unicodedata import name
+from django.db import IntegrityError
 from django.db.models import BooleanField, CharField, Value, Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -9,13 +11,16 @@ from authentication.models import User
 @login_required
 def flux(request):
     flux_owner = request.user
-    owner_followed_list = UserFollows.objects.filter(user = flux_owner)
-    followed = [owner_followed.followed_user for owner_followed in owner_followed_list]
+    owner_followeds = UserFollows.objects.filter(user = flux_owner)
+    followed = [user.followed_user for user in owner_followeds]
 
     reviews = Review.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
     tickets = Ticket.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
-    tickets = tickets.annotate(content_type=Value('TICKET', CharField()), answered=Value(False,BooleanField()))
+    tickets = tickets.annotate(
+        content_type=Value('TICKET', CharField()),
+        answered=Value(False,BooleanField())
+        )
     for ticket in tickets:
         answered = Review.objects.filter(ticket=ticket, user=flux_owner)
         if answered is not None:
@@ -46,26 +51,37 @@ def followed(request):
     followeds = UserFollows.objects.filter(user=current_user)
     followeds = [followed.followed_user for followed in followeds]
     form = forms.FollowForm()
+    context = {'form': form,'followers': followers, 'followeds': followeds}
+    context["message"] = ""
     if request.method == 'POST':
         follow = UserFollows()
         follow.user = request.user
-        message = ""
         if 'follow' in request.POST:
             form = forms.FollowForm(request.POST)
-            if form.is_valid():
+            username=request.POST['name']
+            if username == str(current_user):
+                context["message"] = "Vous vous suivez déjà vous même!"
+            if form.is_valid() and username != str(current_user):
                 try:
-                    follow.followed_user = User.objects.get(username=request.POST['name'])
+                    follow.followed_user = User.objects.get(username=username)
                 except User.DoesNotExist:
-                    message = "Cet utilisateur n'existe pas"
+                    context["message"] = f"{username} n'existe pas!"
                 else:
-                    follow.save()
+                    try:
+                        follow.save()
+                        return redirect('followed')
+                    except IntegrityError:
+                        context["message"] = f"Vous suivez déja {username}."
+            return render(request, 'review/followed.html', context=context)
         else:
             user=current_user.id
-            followed_user=User.objects.get(username=request.POST['followed']).id
-            follow = UserFollows.objects.filter(user=user, followed_user=followed_user)
+            followed=User.objects.get(username=request.POST['followed']).id
+            follow = UserFollows.objects.filter(
+                user=user,
+                followed_user=followed
+                )
             follow.delete()
-        return redirect('followed')
-    context = {'form': form,'followers': followers, 'followeds': followeds}
+            return redirect('followed')
     return render(request, 'review/followed.html', context=context)
 
 @login_required

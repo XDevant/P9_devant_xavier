@@ -2,23 +2,31 @@
 
 {% block content %}
     <h2>Vos posts:</h2>
+    <div class="header">
+        <p><a href="{% url 'create-ticket' %}">Demander une critique</a></p>
+        <p><a href="{% url 'create-review' %}">Créer une critique</a></p>
+    </div>
     <div class="flux">
-        {% for post in posts %}
-        <div class = "post">
-            {% if post.content_type == 'TICKET' %}
-                {% include 'review/partials/ticket.html' with ticket=post %}
-                <div class="footer">
-                    <p><a href="{% url 'edit-ticket' post.id %}">Modifier</a></p>
-                    <p><a href="{% url 'delete-ticket' post.id %}">Supprimer</a></p>
-                </div>
-            {% elif post.content_type == 'REVIEW' %}
-                {% include 'review/partials/review.html' with review=post %}
-                <div class="footer">
-                    <p><a href="{% url 'edit-review' post.id %}">Modifier</a></p>
-                    <p><a href="{% url 'delete-review' post.id %}">Supprimer</a></p>
-                </div>
-            {% endif %}
-        </div>
-        {% endfor %}
+        {% if posts %}
+            {% for post in posts %}
+            <div class = "post">
+                {% if post.content_type == 'TICKET' %}
+                    {% include 'review/partials/ticket.html' with ticket=post %}
+                    <div class="footer">
+                        <p><a href="{% url 'edit-ticket' post.id %}">Modifier</a></p>
+                        <p><a href="{% url 'delete-ticket' post.id %}">Supprimer</a></p>
+                    </div>
+                {% elif post.content_type == 'REVIEW' %}
+                    {% include 'review/partials/review.html' with review=post %}
+                    <div class="footer">
+                        <p><a href="{% url 'edit-review' post.id %}">Modifier</a></p>
+                        <p><a href="{% url 'delete-review' post.id %}">Supprimer</a></p>
+                    </div>
+                {% endif %}
+            </div>
+            {% endfor %}
+        {% else %}
+            <p>Affichera vos posts (tickets et revues)</p>
+        {% endif %}
     </div>
 {% endblock content %}

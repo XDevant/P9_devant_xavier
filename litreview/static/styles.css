@@ -4,10 +4,19 @@
     box-sizing: border-box;
     margin: 0;
     padding: 0.3rem 0;
+    font-family: 'Times New Roman', Times, serif;
 }
 
 body {
     width: 100%;
+}
+
+.link h3,
+button,
+main a {
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 1.17rem;
+    font-weight: bold;
 }
 
 nav ul {
@@ -24,6 +33,7 @@ nav li {
 
 nav a {
     text-decoration: none;
+    font-size: 1.17rem;
 }
 
 header {
@@ -31,6 +41,15 @@ header {
     flex-wrap: wrap;
     width: 100%;
     justify-content:space-around;
+}
+
+header p,
+header nav {
+    width: 35%;
+}
+
+header h1 {
+    width: 30%;
 }
 
 main {
@@ -54,6 +73,11 @@ main a {
     padding: 2px 4px;
 }
 
+h2 {
+    margin-bottom: 1rem;
+    margin-top: 1rem;
+}
+
 .flux {
     width: 100%;
     display: flex;
@@ -71,28 +95,44 @@ main a {
     text-align: center;
 }
 
-
 .follower {
     align-items: center;
     width: 70%;
+}
+
+.follow {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid grey;
+    flex-wrap: nowrap;
 }
 
 .follow label {
     display: none;
 }
 
-.container {
-    width: 100%;
-    display: flex;
+.follow input {
+    margin: 0 5px;
+    flex-grow: 1;
 }
 
-.follow {
+.follow button {
+    font-size: 1rem;
+}
+
+.follow p {
+    font-size: 1.17rem;
+}
+
+#follow {
+    flex-grow: 0;
+    margin-right: 5px;
+}
+
+.container {
     width: 100%;
     display: flex;
-    justify-content: center;
-    border: 1px solid grey;
-}
-.container {
     justify-content: space-evenly;
 }
 
@@ -161,23 +201,12 @@ main a {
     display: inline;
 }
 
-.follow input {
-    min-width: 90%;
-    margin-right: 3px;
-}
-.follow p {
-    min-width: 89%;
-}
-
-.follow .solo {
-    min-width: 98%;
-}
-
 .header {
     display: flex;
     justify-content: space-between;
     min-width: 80%;
-    padding: 0 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
 }
 
 .footer {
