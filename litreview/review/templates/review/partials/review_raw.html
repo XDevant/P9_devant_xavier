@@ -1,0 +1,22 @@
+<div class="header">
+    {% if user != review.user %}
+    <p>{{ review.user }} a publié une critique</p>
+    {% else %}
+    <p>Vous avez publié une critique</p>
+    {% endif %}
+    <p>{{ review.time_created }}</p>
+</div>
+<div>
+    <article class="body">
+        <h3>{{ review.headline }}</h3>
+        <p class="review-separator">-</p>
+        {% for i in "12345" %}
+            {% if forloop.counter > review.rating %}
+                <p>☆</p>
+            {% else %}
+                <p>★</p>
+            {% endif %}
+        {% endfor %}
+    </article>
+    <p>{{ review.body }}</p>
+</div>

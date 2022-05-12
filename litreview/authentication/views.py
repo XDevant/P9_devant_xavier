@@ -11,7 +11,7 @@ def signup_page(request):
         if form.is_valid():
             user = form.save()
             login(request, user)
-            return redirect(settings.LOGIN_URL)
+            return redirect('flux')
     return render(request, 'authentication/signup.html', context={'form': form})
 
 def login_page(request):

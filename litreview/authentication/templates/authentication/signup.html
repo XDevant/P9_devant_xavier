@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="create">
     <h2>Inscription</h2>
-    {% if form.errors %}
-        {{ form.errors }}
-    {% endif %}
     <form method="post">
         {{ form.as_p }}
         {% csrf_token %}
-        <button type="submit" >S’inscrire</button>
+        <div class="container">
+            <button type="submit" ><h3>S’inscrire</h3></button>
+            <h3 class="link"><a href="{% url 'login' %}">Retour connection</a></h3>
+        </div>
     </form>
+</div>
 {% endblock content %}

@@ -1,19 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <section>
-        <h2>Inscrivez-vous maintenant !</h2>
-        <p><a href="{% url 'signup' %}">S'inscrire</a></p>
-    </section>
-    <section>
-        <h2>Connexion</h2>
-        <p>{{ message }}</p>
-        <form method="post">
-            {{ form.as_p }}
-            {% csrf_token %}
-            <button type="submit" >Se connecter</button>
-        </form>       
-    </section>
-
+<div class="create">
+    <p>Vous devez vous connecter pour accéder au site</p>
+    <div  class="container">
+        <div class="create">
+            <h2>Connexion</h2>
+            <p>{{ message }}</p>
+            <form method="post">
+                {{ form.as_p }}
+                {% csrf_token %}
+                <button type="submit" >Se connecter</button>
+            </form>       
+        </div>
+        <div class="create">
+            <p>Pas encore inscrit?</p>
+            <h2>Inscrivez-vous maintenant !</h2>
+            <p><a href="{% url 'signup' %}">S'inscrire</a></p>
+        </div>
+    </div>
+</div>
 {% endblock content %}

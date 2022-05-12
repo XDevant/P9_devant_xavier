@@ -22,6 +22,10 @@ nav li {
     padding-right: 1rem;
 }
 
+nav a {
+    text-decoration: none;
+}
+
 header {
     display: flex;
     flex-wrap: wrap;
@@ -40,6 +44,7 @@ label {
     display: block;
 }
 
+button,
 main a {
     color: white;
     text-decoration: none;
@@ -49,37 +54,123 @@ main a {
     padding: 2px 4px;
 }
 
-.follow label {
-    display: none;
-}
-
 .flux {
-    min-width: 80%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
-.follow {
-    min-width: 100%;
+.review,
+.ticket{
+    width: 100%;
 }
 
-.follow h2,
+.follower h2,
 .follow form {
     text-align: center;
 }
 
-.followed,
+
 .follower {
+    align-items: center;
+    width: 70%;
+}
+
+.follow label {
+    display: none;
+}
+
+.container {
+    width: 100%;
+    display: flex;
+}
+
+.follow {
+    width: 100%;
     display: flex;
     justify-content: center;
+    border: 1px solid grey;
+}
+.container {
+    justify-content: space-evenly;
 }
 
-.follow input,
-.followed p {
-    min-width: 60%;
+.container .post {
+    max-width: 40%;
 }
 
-.follower p{
-    min-width: 70%;
-    text-align: left;
+.create .link,
+.create .container button {
+    padding: 2px 4px;
+    margin-top: 10px;
+}
+
+.create button {
+    padding: 3px 10px;
+    margin-top: 10px;
+}
+
+.create,
+.create form{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.helptext {
+    display: none;
+}
+
+.container .post p {
+    width: 90%;
+}
+
+.post form p {
+    min-width: 90%;
+}
+
+.post textarea,
+.post input {
+    min-width: 75%;
+}
+
+.container .post textarea,
+.container .post input {
+    min-width: 90%;
+}
+
+#img-handler {
+    padding-left: 10%;
+}
+
+#image {
+    padding: 2px 8px;
+    margin: 3px 4px;
+}
+
+#id_image,
+#image-clear_id {
+    min-width: 0%;
+    margin-left: 3px;
+}
+
+#image-clear_id + label {
+    display: inline;
+}
+
+.follow input {
+    min-width: 90%;
+    margin-right: 3px;
+}
+.follow p {
+    min-width: 89%;
+}
+
+.follow .solo {
+    min-width: 98%;
 }
 
 .header {
@@ -100,12 +191,14 @@ main a {
 }
 
 .review .body {
+    width: 100%;
     display: flex;
     justify-content: left;
     align-items: center;
 }
 
 .ticket .body {
+    width: 100%;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -117,12 +210,28 @@ main a {
 
 .post,
 .review-ticket {
-    min-width: 80%;
+    display: flex;
+    flex-direction: column;
     border: 1px solid white;
+    align-items: center;
+    justify-content: center;
+}
+
+.post {
+    width: 80%;
+}
+
+.review-ticket {
+    width: 95%;
+}
+
+.review .ticket .post {
+    margin-left: 10%;
 }
 
 div {
     padding-left: 1rem;
+    padding-right: 0.3rem;
 }
 
 img {

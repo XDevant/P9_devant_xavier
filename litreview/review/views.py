@@ -39,6 +39,7 @@ def posts(request):
 
 @login_required
 def followed(request):
+    """"""
     current_user = request.user
     followers = UserFollows.objects.filter(followed_user=current_user)
     followers = [follower.user for follower in followers]
@@ -48,11 +49,15 @@ def followed(request):
     if request.method == 'POST':
         follow = UserFollows()
         follow.user = request.user
+        message = ""
         if 'follow' in request.POST:
             form = forms.FollowForm(request.POST)
             if form.is_valid():
-                follow.followed_user = User.objects.get(username=request.POST['name'])
-                if follow.followed_user is not None:
+                try:
+                    follow.followed_user = User.objects.get(username=request.POST['name'])
+                except User.DoesNotExist:
+                    message = "Cet utilisateur n'existe pas"
+                else:
                     follow.save()
         else:
             user=current_user.id

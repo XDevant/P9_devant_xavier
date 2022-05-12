@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="create">
     <h2>Modifier la revue :</h2>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <button type="submit" >Envoyer</button>
-    </form>
+    <div class="post">
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit" >Envoyer</button>
+        </form>
+    </div>
+</div>
 {% endblock content %}

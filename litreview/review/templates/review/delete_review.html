@@ -1,10 +1,16 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<article class="create">
     <h2>Etes vous certain de vouloir supprimer la revue : </h2>
-    <p>{{ review.headline }}</p>
+    <div class="post">
+        <div class="review">
+            {% include 'review/partials/review_raw.html' with review=review %}
+        </div>
+    </div>
     <form method="post">
         {% csrf_token %}
         <button type="submit" >Supprimer</button>
     </form>
+</article>
 {% endblock content %}

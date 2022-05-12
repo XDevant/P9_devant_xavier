@@ -1,10 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<article class="create">
     <h2>Etes vous certain de vouloir supprimer le ticket : </h2>
-    <p>{{ ticket.title }}</p>
+    <div class="post">
+        {% include 'review/partials/ticket.html' with ticket=ticket %}
+    </div>
     <form method="post">
         {% csrf_token %}
         <button type="submit" >Supprimer</button>
     </form>
+</article>
 {% endblock content %}
