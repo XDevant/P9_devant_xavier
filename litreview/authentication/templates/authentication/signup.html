@@ -3,13 +3,15 @@
 {% block content %}
 <div class="create">
     <h2>Inscription</h2>
-    <form method="post">
-        {{ form.as_p }}
-        {% csrf_token %}
-        <div class="container">
-            <button type="submit" >S’inscrire</button>
-            <h3 class="link"><a href="{% url 'login' %}">Retour connection</a></h3>
-        </div>
-    </form>
+    <div class="post"  id="signup">
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <div class="container">
+                <button type="submit" >S’inscrire</button>
+                <h3 class="link"><a href="{% url 'login' %}">Retour connection</a></h3>
+            </div>
+        </form>
+    </div>
 </div>
 {% endblock content %}

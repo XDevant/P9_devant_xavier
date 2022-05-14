@@ -169,36 +169,19 @@ h2 {
 }
 
 .post form p {
-    min-width: 90%;
+    flex-grow: 1;
+    width: 80%;
 }
 
 .post textarea,
 .post input {
-    min-width: 75%;
+    flex-grow: 1;
+    width: 100%;
 }
 
 .container .post textarea,
 .container .post input {
     min-width: 90%;
-}
-
-#img-handler {
-    padding-left: 10%;
-}
-
-#image {
-    padding: 2px 8px;
-    margin: 3px 4px;
-}
-
-#id_image,
-#image-clear_id {
-    min-width: 0%;
-    margin-left: 3px;
-}
-
-#image-clear_id + label {
-    display: inline;
 }
 
 .header {
@@ -265,4 +248,69 @@ div {
 
 img {
     padding-bottom: 1rem;
+}
+
+#signup {
+    width: 40%;
+}
+
+#signup ul {
+    display: none;
+}
+
+#signup .errorlist {
+    display: unset;
+}
+
+/* star rating css*/
+
+.post .rating input {
+    z-index: -1;
+    width: fit-content;
+    min-width: fit-content;
+}
+
+.rating {
+    width: 60%;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-evenly;
+}
+
+.rating input + label:before {
+    content:"\2605";
+    font-size:2em;
+    line-height:0.9em;
+    vertical-align:top;
+}
+
+#id_rating_0 + label:before {
+    content:"☆";
+    color: grey;
+} 
+
+#id_rating_0:checked + label:before {
+    color: darkred;
+}
+
+#id_rating_0:hover + label:before {
+    color: red;
+}
+
+.rating input:checked ~ label:before {
+    color:#F80;
+}
+  
+.rating input:hover ~ label:before {
+    color:rgb(245, 231, 35);
+}
+
+.star {
+    color:#F80;
+}
+
+  /* file input css*/
+#id_image[type="file"] {
+    background-color: black;
+    color: wheat;
 }

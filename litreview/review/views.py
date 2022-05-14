@@ -19,11 +19,11 @@ def flux(request):
     tickets = Ticket.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
     tickets = tickets.annotate(
         content_type=Value('TICKET', CharField()),
-        answered=Value(False,BooleanField())
+        answered=Value(False, BooleanField())
         )
     for ticket in tickets:
         answered = Review.objects.filter(ticket=ticket, user=flux_owner)
-        if answered is not None:
+        if len(answered) > 0:
             ticket.answered = True
     posts = sorted(chain(reviews, tickets), 
                    key=lambda post: post.time_created, 

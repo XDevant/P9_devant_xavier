@@ -1,0 +1,10 @@
+<div class="{{ widget.name }}">
+    {% for i in "543210" %}
+        {% if i in widget.value %}
+        <input type="radio" name="rating" value={{ i }} checked id="id_rating_{{ i }}" required>
+        {% else %}
+        <input type="radio" name="rating" value={{ i }} required id="id_rating_{{ i }}">
+        {% endif %}
+    <label for="id_rating_{{ i }}"></label>
+    {% endfor %}
+</div>

@@ -1,19 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
+<div class="create">
     <h2>Créer une critique</h2>
-    <section class="create">
+    <section class="post">
+        <h3>Votre Critique:</h3>
+        <form method="post">
+            {{ form.as_p }}
+            {% csrf_token %}
+            <button type="submit" >Envoyer</button>
+        </form>
         <h3>Vous êtes en train de poster en réponse à</h3>
         <div class="post">
             {% include 'review/partials/ticket.html' with ticket=ticket %}
         </div>
     </section>
-    <div class="post">
-        <form method="post">
-            <h3>Votre Critique:</h3>
-            {{ form.as_p }}
-            {% csrf_token %}
-            <button type="submit" >Envoyer</button>
-        </form>
-    </div>
+</div>
 {% endblock content %}
