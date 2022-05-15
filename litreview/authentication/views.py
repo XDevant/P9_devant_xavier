@@ -12,7 +12,8 @@ def signup_page(request):
             user = form.save()
             login(request, user)
             return redirect('flux')
-    return render(request, 'authentication/signup.html', context={'form': form})
+    context = {'form': form}
+    return render(request, 'authentication/signup.html', context=context)
 
 def login_page(request):
     form = forms.LoginForm()
@@ -29,8 +30,8 @@ def login_page(request):
                 return redirect('flux')
             else:
                 message = 'Identifiants invalides.'
-    return render(
-        request, 'authentication/login.html', context={'form': form, 'message': message})
+    context={'form': form, 'message': message}
+    return render(request, 'authentication/login.html', context=context)
 
 def logout_user(request):
     logout(request)

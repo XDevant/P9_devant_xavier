@@ -30,5 +30,6 @@ class ReviewForm(forms.ModelForm):
 
 
 class FollowForm(forms.Form):
+    """We add the follow tag to filter our post requests in view"""
     follow = forms.BooleanField(widget=forms.HiddenInput, initial=True)
     name = forms.CharField(max_length=8192)

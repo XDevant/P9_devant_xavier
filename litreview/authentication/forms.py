@@ -20,6 +20,7 @@ class SignupForm(UserCreationForm):
                                     'placeholder': '8 caractères min',
                                     })
 
+
 class LoginForm(forms.Form):
     username = forms.CharField(
         max_length=63,

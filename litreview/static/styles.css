@@ -41,6 +41,8 @@ header {
     flex-wrap: wrap;
     width: 100%;
     justify-content:space-around;
+    position: sticky;
+    top: 0px;
 }
 
 header p,
@@ -309,8 +311,18 @@ img {
     color:#F80;
 }
 
-  /* file input css*/
+/* file input css*/
 #id_image[type="file"] {
     background-color: black;
     color: wheat;
+}
+
+/* last touch styling*/
+.review-ticket,
+.post {
+    border: solid darkslategrey 2px;
+    border-radius: 2%;
+    box-shadow: 2px 2px 4px gray;
+    padding: 0 20px 10px 8px;
+    margin: 10px 10px;
 }

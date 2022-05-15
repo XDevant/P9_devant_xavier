@@ -8,6 +8,7 @@ from . import forms
 from review.models import Ticket,Review, UserFollows
 from authentication.models import User
 
+
 @login_required
 def flux(request):
     flux_owner = request.user
@@ -18,9 +19,9 @@ def flux(request):
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
     tickets = Ticket.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
     tickets = tickets.annotate(
-        content_type=Value('TICKET', CharField()),
-        answered=Value(False, BooleanField())
-        )
+                               content_type=Value('TICKET', CharField()),
+                               answered=Value(False, BooleanField())
+                               )
     for ticket in tickets:
         answered = Review.objects.filter(ticket=ticket, user=flux_owner)
         if len(answered) > 0:
@@ -94,7 +95,8 @@ def create_ticket(request):
             ticket.user = request.user
             ticket.save()
             return redirect('flux')
-    return render(request, 'review/create_ticket.html', context={'form': form})
+    context = {'form': form}
+    return render(request, 'review/create_ticket.html', context=context)
 
 @login_required
 def create_review(request):
@@ -130,7 +132,8 @@ def ticket_review(request, id):
             review.ticket = ticket
             review.save()
             return redirect('flux')
-    return render(request, 'review/ticket_review.html', context={'ticket': ticket, 'form': form})
+    context={'ticket': ticket, 'form': form}
+    return render(request, 'review/ticket_review.html', context=context)
 
 @login_required
 def edit_ticket(request, id):
@@ -154,7 +157,6 @@ def delete_ticket(request, id):
         return redirect('posts')
     return render(request, 'review/delete_ticket.html', {'ticket': ticket})
 
-
 @login_required
 def edit_review(request, id):
     review = Review.objects.get(id=id)
@@ -174,4 +176,3 @@ def delete_review(request, id):
         review.delete()
         return redirect('posts')
     return render(request, 'review/delete_review.html', {'review': review})
-    
