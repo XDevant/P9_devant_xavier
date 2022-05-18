@@ -4,7 +4,7 @@ from .widgets import StarRatingWidget, ImageWidget
 
 
 class TicketForm(forms.ModelForm):
-    """ """
+    """Model form, title translation and custom imagefield widget"""
     class Meta:
         model = models.Ticket
         fields = ('title', 'description', 'image')
@@ -13,6 +13,7 @@ class TicketForm(forms.ModelForm):
 
 
 class ReviewForm(forms.ModelForm):
+    """Model form, title translation and custom widget for rating reviews"""
     class Meta:
         model = models.Review
         fields = ['headline', 'rating', 'body']

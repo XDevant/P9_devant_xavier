@@ -6,4 +6,3 @@ litreview/review/migrations/__pycache__/
 litreview/authentication/__pycache__
 litreview/authentication/migrations/__pycache__
 litreview/media/
-litreview/review/templates/widgets/attrs.html

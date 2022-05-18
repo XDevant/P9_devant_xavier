@@ -11,6 +11,8 @@ from authentication.models import User
 
 @login_required
 def flux(request):
+    """Entry point after login or post creation, in Nav
+    Holds all links for post creation, GET only"""
     flux_owner = request.user
     owner_followeds = UserFollows.objects.filter(user = flux_owner)
     followed = [user.followed_user for user in owner_followeds]
@@ -33,6 +35,8 @@ def flux(request):
 
 @login_required
 def posts(request):
+    """Entry point after  post edition, in Nav
+    Holds all links for post edition, GET only"""
     current_user = request.user
     reviews = Review.objects.filter(user=current_user)
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
@@ -45,7 +49,10 @@ def posts(request):
 
 @login_required
 def followed(request):
-    """"""
+    """In nav, from Nav or itself to itself
+    POST is either adding follower from input (follow in POST)
+    or deleting follower via it's id
+    """
     current_user = request.user
     followers = UserFollows.objects.filter(followed_user=current_user)
     followers = [follower.user for follower in followers]
@@ -75,8 +82,8 @@ def followed(request):
                         context["message"] = f"Vous suivez déja {username}."
             return render(request, 'review/followed.html', context=context)
         else:
-            user=current_user.id
-            followed=User.objects.get(username=request.POST['followed']).id
+            user = current_user.id
+            followed = User.objects.get(username=request.POST['followed']).id
             follow = UserFollows.objects.filter(
                 user=user,
                 followed_user=followed
@@ -87,6 +94,7 @@ def followed(request):
 
 @login_required
 def create_ticket(request):
+    """from flux or posts to flux. Ticket creation form"""
     form = forms.TicketForm()
     if request.method == 'POST':
         form = forms.TicketForm(request.POST, request.FILES)
@@ -100,6 +108,7 @@ def create_ticket(request):
 
 @login_required
 def create_review(request):
+    """from flux or posts to flux. Ticket + Review creation form"""
     ticket_form = forms.TicketForm()
     review_form = forms.ReviewForm()
     if request.method == 'POST':
@@ -122,6 +131,7 @@ def create_review(request):
 
 @login_required
 def ticket_review(request, id):
+    """from flux to flux. Review a Ticket creation form"""
     ticket = Ticket.objects.get(id=id)
     form = forms.ReviewForm()
     if request.method == 'POST':
@@ -137,6 +147,7 @@ def ticket_review(request, id):
 
 @login_required
 def edit_ticket(request, id):
+    """from posts to posts. User's Ticket edition form"""
     ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
         form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
@@ -151,6 +162,7 @@ def edit_ticket(request, id):
 
 @login_required
 def delete_ticket(request, id):
+    """from posts to posts. User's Ticket delete confirmation"""
     ticket = Ticket.objects.get(id=id)
     if request.method == 'POST':
         ticket.delete()
@@ -159,6 +171,7 @@ def delete_ticket(request, id):
 
 @login_required
 def edit_review(request, id):
+    """from posts to posts. User's Review edition form"""
     review = Review.objects.get(id=id)
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST, instance=review)
@@ -171,6 +184,7 @@ def edit_review(request, id):
 
 @login_required
 def delete_review(request, id):
+    """from posts to posts. User's Review delete confirmation"""
     review = Review.objects.get(id=id)
     if request.method == 'POST':
         review.delete()
