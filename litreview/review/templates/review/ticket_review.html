@@ -6,7 +6,7 @@
     <section class="post">
         <h3>Votre Critique:</h3>
         <form method="post">
-            {{ form.as_p }}
+            {{ form }}
             {% csrf_token %}
             <button type="submit" >Envoyer</button>
         </form>

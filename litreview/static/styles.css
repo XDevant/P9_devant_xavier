@@ -65,6 +65,7 @@ label {
     display: block;
 }
 
+#id_image label,
 button,
 main a {
     color: white;
@@ -170,15 +171,17 @@ h2 {
     width: 90%;
 }
 
-.post form p {
+.post form {
     flex-grow: 1;
     width: 80%;
 }
 
+.post label,
 .post textarea,
 .post input {
     flex-grow: 1;
     width: 100%;
+    padding: 10px 5px;
 }
 
 .container .post textarea,
@@ -249,7 +252,7 @@ div {
 }
 
 img {
-    padding-bottom: 1rem;
+    padding: 0;
 }
 
 #signup {
@@ -312,9 +315,34 @@ img {
 }
 
 /* file input css*/
-#id_image[type="file"] {
+.image {
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    padding: 0;
+}
+
+.image div {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+}
+
+.image label{
+    z-index: 2;
+    position: relative;
+    width: fit-content;
+    margin: 4px 0;
+}
+
+.image input[type="file"] {
+    position: relative;
+    left: 0;
+    top: -2rem;
     background-color: black;
     color: wheat;
+    z-index: 1;
+    padding: 4px 0 0 10px;
 }
 
 /* last touch styling*/

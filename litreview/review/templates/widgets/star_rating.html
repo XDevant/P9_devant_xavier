@@ -1,10 +1,10 @@
-<div class="{{ widget.name }}">
+<div class="{{ widget.name }}" id="{{ widget.attrs.id }}">
     {% for i in "543210" %}
         {% if i in widget.value %}
-        <input type="radio" name="rating" value={{ i }} checked id="id_rating_{{ i }}" required>
+        <input type="radio" name="{{ widget.name }}" value={{ i }} id="{{ widget.attrs.id }}_{{ i }}"  checked required>
         {% else %}
-        <input type="radio" name="rating" value={{ i }} required id="id_rating_{{ i }}">
+        <input type="radio" name="{{ widget.name }}" value={{ i }} id="{{ widget.attrs.id }}_{{ i }}" required>
         {% endif %}
-    <label for="id_rating_{{ i }}"></label>
+        <label for="{{ widget.attrs.id }}_{{ i }}"></label>
     {% endfor %}
 </div>

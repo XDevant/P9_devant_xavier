@@ -4,15 +4,12 @@ from .widgets import StarRatingWidget, ImageWidget
 
 
 class TicketForm(forms.ModelForm):
+    """ """
     class Meta:
         model = models.Ticket
-        fields = ['title', 'description', 'image']
-        labels = {
-                  'title': 'Titre'
-                 }
-        widgets = {
-                  'image': ImageWidget(attrs={'title': "Modifier l'image"})
-                  }
+        fields = ('title', 'description', 'image')
+        labels = {'title': 'Titre'}
+        widgets = {'image': ImageWidget()}
 
 
 class ReviewForm(forms.ModelForm):
@@ -20,9 +17,9 @@ class ReviewForm(forms.ModelForm):
         model = models.Review
         fields = ['headline', 'rating', 'body']
         labels = {
-                  'headline': 'Titre',
-                  'rating': 'Note :',
-                  'body': 'Commentaire'
+                 'headline': 'Titre',
+                 'rating': 'Note',
+                 'body': 'Commentaire'
                  }
         widgets = {
                   'rating': StarRatingWidget()
