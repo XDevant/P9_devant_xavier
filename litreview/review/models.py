@@ -20,17 +20,15 @@ class Ticket(models.Model):
 
     def resize_image(self):
         """Force the image format to portrait size 105*147px"""
-        try:
-            image = Image.open(self.image)
-            image = image.resize(self.IMAGE_MAX_SIZE)
-            image.save(self.image.path)
-        except Exception:
-            pass
+        image = Image.open(self.image)
+        image = image.resize(self.IMAGE_MAX_SIZE)
+        image.save(self.image.path)
 
     def save(self, *args, **kwargs):
         """Override the save method to resize the image when saving"""
         super().save(*args, **kwargs)
-        self.resize_image()
+        if self.image:
+            self.resize_image()
 
     def delete(self, filename, *args, **kwargs):
         """Override the delete method to clean image storage on delete"""

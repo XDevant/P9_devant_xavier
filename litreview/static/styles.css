@@ -93,6 +93,16 @@ h2 {
     width: 100%;
 }
 
+.ticket .body h3 + p{
+    max-width: 75%;
+    padding-left: 1rem;
+}
+
+.review .body + p {
+    max-width: 85%;
+    padding-left: 1rem;
+}
+
 .follower h2,
 .follow form {
     text-align: center;

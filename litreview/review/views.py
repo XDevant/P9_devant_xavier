@@ -1,5 +1,6 @@
 from itertools import chain
 from django.db import IntegrityError
+from django.core.exceptions import ObjectDoesNotExist
 from django.db.models import BooleanField, CharField, Value, Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
@@ -157,7 +158,10 @@ def ticket_review(request, id):
     from flux to flux. Review a Ticket creation form
     Return: String (HTML)
     """
-    ticket = Ticket.objects.get(id=id)
+    try:
+        ticket = Ticket.objects.get(id=id)
+    except  ObjectDoesNotExist:
+        return redirect('flux')
     form = forms.ReviewForm()
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST)
@@ -179,14 +183,17 @@ def edit_ticket(request, id):
     from posts to posts. User's Ticket edition form
     Return: String (HTML)
     """
-    ticket = Ticket.objects.get(id=id)
+    try:
+        ticket = Ticket.objects.get(id=id)
+    except  ObjectDoesNotExist:
+        return redirect('posts')
     if request.method == 'POST':
         form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
         if form.is_valid():
             old_file_name = Ticket.objects.get(id=id).image.name
-            ticket = form.save(commit=False)
-            if ticket.image.name:
+            if len(request.FILES) > 0:
                 ticket.clean_storage(old_file_name)
+            ticket = form.save(commit=False)
             ticket.user = request.user
             ticket.save()
             return redirect('posts')
@@ -203,7 +210,10 @@ def delete_ticket(request, id):
     from posts to posts. User's Ticket delete confirmation
     Return: String (HTML)
     """
-    ticket = Ticket.objects.get(id=id)
+    try:
+        ticket = Ticket.objects.get(id=id)
+    except  ObjectDoesNotExist:
+        return redirect('posts')
     if request.method == 'POST':
         ticket.delete(ticket.image.name)
         return redirect('posts')
@@ -218,7 +228,10 @@ def edit_review(request, id):
     from posts to posts. User's Review edition form
     Return: String (HTML)
     """
-    review = Review.objects.get(id=id)
+    try:
+        review = Review.objects.get(id=id)
+    except  ObjectDoesNotExist:
+        return redirect('posts')
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST, instance=review)
         if form.is_valid():
@@ -238,7 +251,10 @@ def delete_review(request, id):
     from posts to posts. User's Review delete confirmation
     Return: String (HTML)
     """
-    review = Review.objects.get(id=id)
+    try:
+        review = Review.objects.get(id=id)
+    except  ObjectDoesNotExist:
+        return redirect('posts')
     if request.method == 'POST':
         review.delete()
         return redirect('posts')
