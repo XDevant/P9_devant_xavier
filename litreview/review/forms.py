@@ -1,6 +1,7 @@
 from django import forms
 from . import models
 from .widgets import StarRatingWidget, ImageWidget
+from django.forms.widgets import Textarea
 
 
 class TicketForm(forms.ModelForm):
@@ -23,6 +24,7 @@ class ReviewForm(forms.ModelForm):
                  'body': 'Commentaire'
                  }
         widgets = {
+                  'body': Textarea(),
                   'rating': StarRatingWidget()
                   }
 

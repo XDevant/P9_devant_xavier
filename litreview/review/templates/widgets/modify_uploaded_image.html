@@ -1,14 +1,16 @@
 <div class="{{ widget.name }}" id="{{ widget.attrs.id }}">
     {% if widget.value %}
-        <img src={{ widget.value.url }}/>
+    <img src={{ widget.value.url }}/>
+    {% else %}
+    <div class="{{ widget.name }}-bck-img"></div>
     {% endif %}
     <div>
         {% if widget.value %}
-        <label for="id_{{ widget.name }}_0">&nbsp;Modifier l'image&nbsp;</label>
+        <label for="{{ widget.attrs.id }}_0">&nbsp;Modifier l'image&nbsp;</label>
         {% else %}
-        <label for="id_{{ widget.name }}_0">Choisir un fichier</label>
+        <label for="{{ widget.attrs.id }}_0">Choisir un fichier</label>
         {% endif %}
         <input type="{{ widget.type }}" name="{{ widget.name }}" {% include "widgets/attrs.html" %}/>
     </div>
+    <div class="{{  widget.name }}-bck-img"></div>
 </div>
-<!-- accept="image/*" id="id_{{ widget.name }}_0"-->

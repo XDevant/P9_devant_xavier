@@ -342,7 +342,17 @@ img {
     background-color: black;
     color: wheat;
     z-index: 1;
-    padding: 4px 0 0 10px;
+    opacity: 0;
+    padding: 0;
+    width: 10px;
+}
+
+.image-bck-img {
+    height: 149px;
+    width: 105px;
+    padding: 0;
+    margin-left: 8px;
+    background-size: 105px 149px;
 }
 
 /* last touch styling*/

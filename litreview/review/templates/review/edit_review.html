@@ -9,6 +9,10 @@
             {% csrf_token %}
             <button type="submit" >Envoyer</button>
         </form>
+        <h3>Vous êtes en train de modifier la réponse à</h3>
+        <div class="post">
+            {% include 'review/partials/ticket.html' with ticket=ticket %}
+        </div>
     </div>
 </div>
 {% endblock content %}

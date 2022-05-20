@@ -13,11 +13,15 @@ The spimplest way to test it is to:
 
         pip install -r requirements.txt
 
-5. Run the server:
+5. Navigate to the root of the app:
+
+        cd litreview
+
+6. Run the server:
 
         python manage.py runserver
 
-6. Click the link in your command line interface or copy the url in your web browser:
+7. Click the link in your command line interface or copy the url in your web browser:
     Starting development server at http://127.0.0.1:8000/
 
 Note: respect PEP8 thanks to flake8
