@@ -28,7 +28,7 @@ class LoginForm(forms.Form):
         widget=forms.TextInput(attrs={'placeholder': 'SuperDupond42'})
         )
     password = forms.CharField(
-        max_length=63, 
+        max_length=63,
         widget=forms.PasswordInput(attrs={'placeholder': '********'}),
         label='Mot de passe'
         )

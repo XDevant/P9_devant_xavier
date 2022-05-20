@@ -1,6 +1,5 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import login, authenticate, logout
-from django.conf import settings
 from . import forms
 
 
@@ -14,6 +13,7 @@ def signup_page(request):
             return redirect('flux')
     context = {'form': form}
     return render(request, 'authentication/signup.html', context=context)
+
 
 def login_page(request):
     form = forms.LoginForm()
@@ -30,8 +30,9 @@ def login_page(request):
                 return redirect('flux')
             else:
                 message = 'Identifiants invalides.'
-    context={'form': form, 'message': message}
+    context = {'form': form, 'message': message}
     return render(request, 'authentication/login.html', context=context)
+
 
 def logout_user(request):
     logout(request)

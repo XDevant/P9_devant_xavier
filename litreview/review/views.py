@@ -4,7 +4,7 @@ from django.db.models import BooleanField, CharField, Value, Q
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from . import forms
-from review.models import Ticket,Review, UserFollows
+from review.models import Ticket, Review, UserFollows
 from authentication.models import User
 
 
@@ -17,7 +17,7 @@ def flux(request):
     Return: String (HTML)
     """
     flux_owner = request.user
-    owner_followeds = UserFollows.objects.filter(user = flux_owner)
+    owner_followeds = UserFollows.objects.filter(user=flux_owner)
     followed = [user.followed_user for user in owner_followeds]
 
     reviews = Review.objects.filter(Q(user__in=followed) | Q(user=flux_owner))
@@ -31,10 +31,11 @@ def flux(request):
         answered = Review.objects.filter(ticket=ticket, user=flux_owner)
         if len(answered) > 0:
             ticket.answered = True
-    posts = sorted(chain(reviews, tickets), 
-                   key=lambda post: post.time_created, 
+    posts = sorted(chain(reviews, tickets),
+                   key=lambda post: post.time_created,
                    reverse=True)
     return render(request, 'review/flux.html', context={'posts': posts})
+
 
 @login_required
 def posts(request):
@@ -49,10 +50,11 @@ def posts(request):
     reviews = reviews.annotate(content_type=Value('REVIEW', CharField()))
     tickets = Ticket.objects.filter(user=current_user)
     tickets = tickets.annotate(content_type=Value('TICKET', CharField()))
-    posts = sorted(chain(reviews, tickets), 
-                   key=lambda post: post.time_created, 
+    posts = sorted(chain(reviews, tickets),
+                   key=lambda post: post.time_created,
                    reverse=True)
     return render(request, 'review/posts.html', context={'posts': posts})
+
 
 @login_required
 def followed(request):
@@ -69,14 +71,14 @@ def followed(request):
     followeds = UserFollows.objects.filter(user=current_user)
     followeds = [followed.followed_user for followed in followeds]
     form = forms.FollowForm()
-    context = {'form': form,'followers': followers, 'followeds': followeds}
+    context = {'form': form, 'followers': followers, 'followeds': followeds}
     context["message"] = ""
     if request.method == 'POST':
         follow = UserFollows()
         follow.user = request.user
         if 'follow' in request.POST:
             form = forms.FollowForm(request.POST)
-            username=request.POST['name']
+            username = request.POST['name']
             if username == str(current_user):
                 context["message"] = "Vous vous suivez déjà vous même!"
             if form.is_valid() and username != str(current_user):
@@ -102,6 +104,7 @@ def followed(request):
             return redirect('followed')
     return render(request, 'review/followed.html', context=context)
 
+
 @login_required
 def create_ticket(request):
     """
@@ -119,6 +122,7 @@ def create_ticket(request):
             return redirect('flux')
     context = {'form': form}
     return render(request, 'review/create_ticket.html', context=context)
+
 
 @login_required
 def create_review(request):
@@ -144,6 +148,7 @@ def create_review(request):
     context = {'ticket_form': ticket_form, 'review_form': review_form}
     return render(request, 'review/create_review.html', context=context)
 
+
 @login_required
 def ticket_review(request, id):
     """
@@ -162,8 +167,9 @@ def ticket_review(request, id):
             review.ticket = ticket
             review.save()
             return redirect('flux')
-    context={'ticket': ticket, 'form': form}
+    context = {'ticket': ticket, 'form': form}
     return render(request, 'review/ticket_review.html', context=context)
+
 
 @login_required
 def edit_ticket(request, id):
@@ -188,6 +194,7 @@ def edit_ticket(request, id):
         form = forms.TicketForm(instance=ticket)
     return render(request, 'review/edit_ticket.html', {'form': form})
 
+
 @login_required
 def delete_ticket(request, id):
     """
@@ -201,6 +208,7 @@ def delete_ticket(request, id):
         ticket.delete(ticket.image.name)
         return redirect('posts')
     return render(request, 'review/delete_ticket.html', {'ticket': ticket})
+
 
 @login_required
 def edit_review(request, id):
@@ -218,8 +226,9 @@ def edit_review(request, id):
             return redirect('posts')
     else:
         form = forms.ReviewForm(instance=review)
-    context={'ticket': review.ticket, 'form': form}
+    context = {'ticket': review.ticket, 'form': form}
     return render(request, 'review/edit_review.html', context=context)
+
 
 @login_required
 def delete_review(request, id):

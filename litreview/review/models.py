@@ -4,6 +4,7 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 from django.conf import settings
 from PIL import Image
 
+
 class Ticket(models.Model):
     """Ticket model Fiels = title, description, user, image, time_created
     Added Methods: resize_image, clean_storage"""
@@ -23,7 +24,7 @@ class Ticket(models.Model):
             image = Image.open(self.image)
             image = image.resize(self.IMAGE_MAX_SIZE)
             image.save(self.image.path)
-        except:
+        except Exception:
             pass
 
     def save(self, *args, **kwargs):
@@ -44,7 +45,7 @@ class Ticket(models.Model):
         try:
             fs = FileSystemStorage()
             fs.delete(filename)
-        except:
+        except Exception:
             pass
 
 
@@ -78,4 +79,4 @@ class UserFollows(models.Model):
                                       )
 
     class Meta:
-        unique_together=('user', 'followed_user')
+        unique_together = ('user', 'followed_user')

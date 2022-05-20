@@ -5,7 +5,7 @@ class StarRatingWidget(forms.widgets.RadioSelect):
     """
     Custom RadioSelect template in order to have all inputs and labels
     in the same div in reverse order.
-    Mostly for CSS compatibility (allows to then invert the labels 
+    Mostly for CSS compatibility (allows to then invert the labels
     display order and turn a previous sibling into a next sibling)
     """
     template_name = 'widgets/star_rating.html'
