@@ -280,7 +280,7 @@ img {
 /* star rating css*/
 
 .post .rating input {
-    z-index: -1;
+    opacity: 0;
     width: fit-content;
     min-width: fit-content;
 }
