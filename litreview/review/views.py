@@ -160,7 +160,7 @@ def ticket_review(request, id):
     """
     try:
         ticket = Ticket.objects.get(id=id)
-    except  ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return redirect('flux')
     form = forms.ReviewForm()
     if request.method == 'POST':
@@ -185,7 +185,7 @@ def edit_ticket(request, id):
     """
     try:
         ticket = Ticket.objects.get(id=id)
-    except  ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return redirect('posts')
     if request.method == 'POST':
         form = forms.TicketForm(request.POST, request.FILES, instance=ticket)
@@ -212,7 +212,7 @@ def delete_ticket(request, id):
     """
     try:
         ticket = Ticket.objects.get(id=id)
-    except  ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return redirect('posts')
     if request.method == 'POST':
         ticket.delete(ticket.image.name)
@@ -230,7 +230,7 @@ def edit_review(request, id):
     """
     try:
         review = Review.objects.get(id=id)
-    except  ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return redirect('posts')
     if request.method == 'POST':
         form = forms.ReviewForm(request.POST, instance=review)
@@ -253,7 +253,7 @@ def delete_review(request, id):
     """
     try:
         review = Review.objects.get(id=id)
-    except  ObjectDoesNotExist:
+    except ObjectDoesNotExist:
         return redirect('posts')
     if request.method == 'POST':
         review.delete()
