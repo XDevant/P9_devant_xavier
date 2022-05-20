@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 <div class="create">
     <h2>Modifier le ticket:</h2>
@@ -10,5 +10,6 @@
             <button type="submit" >Envoyer</button>
         </form>
     </div>
+    <script src="{% static 'script.js' %}"></script>
 </div>
 {% endblock content %}

@@ -93,13 +93,9 @@ h2 {
     width: 100%;
 }
 
-.ticket .body h3 + p{
-    max-width: 75%;
-    padding-left: 1rem;
-}
-
+.ticket .body h3 + p,
 .review .body + p {
-    max-width: 85%;
+    width: 85%;
     padding-left: 1rem;
 }
 
